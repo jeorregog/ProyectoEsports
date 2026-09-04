@@ -1,74 +1,69 @@
 import { computed, shallowRef } from 'vue'
 import { defineStore } from 'pinia'
 
-import type { Match } from '../models/Match'
-import {
-  MatchService,
-  type CreateMatchInput,
-  type UpdateMatchInput,
-} from '../services/MatchService'
+import { UserService, type CreateUserInput, type UpdateUserInput } from '../services/UserService'
+import type { User } from '../models/User'
 
+export const useUserStore = defineStore('users', () => {
+  const users = shallowRef<User[]>([])
 
-export const useMatchStore = defineStore('matches', () => {
-  const matches = shallowRef<Match[]>([])
+  const userCount = computed(() => users.value.length)
 
-  const matchCount = computed(() => matches.value.length)
-
-  function fetchMatches(): Match[] {
-    matches.value = MatchService.getAll()
-    return matches.value
+  function fetchUsers(): User[] {
+    users.value = UserService.getAll()
+    return users.value
   }
 
-  function getMatchById(id: string): Match | undefined {
-    return matches.value.find((match) => match.getId() === id)
+  function getUserById(id: string): User | undefined {
+    return users.value.find((user) => user.getId() === id)
   }
 
-  function getMatchesByTeamId(teamId: string): Match[] {
-    return matches.value.filter(
-      (match) => match.getTeam1().getId() === teamId || match.getTeam2().getId() === teamId,
+  function getUserByEmail(email: string): User | undefined {
+    return users.value.find(
+      (user) => user.getEmail().trim().toLowerCase() === email.trim().toLowerCase(),
     )
   }
 
-  function createMatch(input: CreateMatchInput): Match {
-    const match = MatchService.create(input)
-    matches.value = [...matches.value, match]
-    return match
+  function createUser(input: CreateUserInput): User {
+    const user = UserService.create(input)
+    users.value = [...users.value, user]
+    return user
   }
 
-  function updateMatch(id: string, input: UpdateMatchInput): Match | undefined {
-    const match = MatchService.update(id, input)
+  function updateUser(id: string, input: UpdateUserInput): User | undefined {
+    const user = UserService.update(id, input)
 
-    if (!match) {
+    if (!user) {
       return undefined
     }
 
-    const index = matches.value.findIndex((item) => item.getId() === id)
-    matches.value =
+    const index = users.value.findIndex((item) => item.getId() === id)
+    users.value =
       index === -1
-        ? [...matches.value, match]
-        : matches.value.map((item, i) => (i === index ? match : item))
+        ? [...users.value, user]
+        : users.value.map((item, i) => (i === index ? user : item))
 
-    return match
+    return user
   }
 
-  function deleteMatch(id: string): boolean {
-    const deleted = MatchService.delete(id)
+  function deleteUser(id: string): boolean {
+    const deleted = UserService.delete(id)
 
     if (deleted) {
-      matches.value = matches.value.filter((match) => match.getId() !== id)
+      users.value = users.value.filter((user) => user.getId() !== id)
     }
 
     return deleted
   }
 
   return {
-    matches,
-    matchCount,
-    fetchMatches,
-    getMatchById,
-    getMatchesByTeamId,
-    createMatch,
-    updateMatch,
-    deleteMatch,
+    users,
+    userCount,
+    fetchUsers,
+    getUserById,
+    getUserByEmail,
+    createUser,
+    updateUser,
+    deleteUser,
   }
 })
