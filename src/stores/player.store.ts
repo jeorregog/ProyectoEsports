@@ -8,7 +8,6 @@ import {
   type UpdatePlayerInput,
 } from '../services/PlayerService'
 
-
 export const usePlayerStore = defineStore('players', () => {
   const players = shallowRef<Player[]>([])
 
