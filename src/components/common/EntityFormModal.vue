@@ -3,7 +3,7 @@
     v-if="isOpen"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
   >
-    <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+    <div class="bg-white text-gray-900 rounded-lg shadow-xl w-full max-w-md p-6">
       <h2 class="text-xl font-bold mb-4">{{ title }}</h2>
 
       <!-- El formulario delega su contenido a la View mediante slots -->
