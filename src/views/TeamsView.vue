@@ -2,6 +2,7 @@
   <div class="min-h-screen bg-neutral-950 text-white">
     <AppNavbar
       :is-authenticated="authStore.isAuthenticated"
+      :is-admin="authStore.isAdmin"
       :username="currentUsername"
       @logout="handleLogout"
     />
