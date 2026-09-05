@@ -49,18 +49,18 @@
   </div>
 </template>
 
-<script setup lang="ts" generic="T extends Record<string, unknown>">
+<script setup lang="ts" generic="T extends object">
 /**
  * DataTable: Tabla genérica reutilizable.
  * Usamos el generic T para mantener el tipado estricto sin usar `any`.
  */
-export interface ColumnDefinition {
-  key: string
+export interface ColumnDefinition<T extends object> {
+  key: keyof T
   label: string
 }
 
 defineProps<{
-  columns: ColumnDefinition[]
+  columns: ColumnDefinition<T>[]
   data: T[]
   showActions?: boolean
 }>()

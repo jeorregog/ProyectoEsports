@@ -209,7 +209,13 @@ import { useMatchStore } from '../stores/match.store'
 import { usePlayerStore } from '../stores/player.store'
 import { useTeamStore } from '../stores/team.store'
 
-type RecentMatchRow = Record<string, string>
+interface RecentMatchRow {
+  date: string
+  game: string
+  team1: string
+  team2: string
+  winner: string
+}
 
 const playerStore = usePlayerStore()
 const teamStore = useTeamStore()
@@ -222,7 +228,7 @@ const dateFormatter = new Intl.DateTimeFormat('es-CO', {
   year: 'numeric',
 })
 
-const recentMatchColumns: ColumnDefinition[] = [
+const recentMatchColumns: ColumnDefinition<RecentMatchRow>[] = [
   { key: 'date', label: 'Fecha' },
   { key: 'game', label: 'Juego' },
   { key: 'team1', label: 'Team 1' },
