@@ -4,7 +4,6 @@ import { defineStore } from 'pinia'
 import type { Team } from '../models/Team'
 import { TeamService, type CreateTeamInput, type UpdateTeamInput } from '../services/TeamService'
 
-
 export const useTeamStore = defineStore('teams', () => {
   const teams = shallowRef<Team[]>([])
 

@@ -8,7 +8,6 @@ import {
   type UpdateMatchInput,
 } from '../services/MatchService'
 
-
 export const useMatchStore = defineStore('matches', () => {
   const matches = shallowRef<Match[]>([])
 
