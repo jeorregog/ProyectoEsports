@@ -51,3 +51,9 @@ export function writeSessionUserId(userId: string | null): void {
 
   localStorage.setItem(STORAGE_KEYS.SESSION, userId)
 }
+
+export function generateId(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(16))
+
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')
+}

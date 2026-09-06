@@ -1,6 +1,6 @@
 import { User } from '../models/User'
 import type { UserStorageDTO } from '../types/storage.types'
-import { readCollection, writeCollection, STORAGE_KEYS } from './storageKeys'
+import { generateId, readCollection, writeCollection, STORAGE_KEYS } from './storageKeys'
 
 export interface CreateUserInput {
   username: string
@@ -56,7 +56,7 @@ export class UserService {
 
     const now = new Date().toISOString()
     const dto: UserStorageDTO = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       username: input.username,
       email: input.email,
       password: input.password,

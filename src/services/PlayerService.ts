@@ -1,6 +1,6 @@
 import { Player } from '../models/Player'
 import type { PlayerStorageDTO } from '../types/storage.types'
-import { readCollection, writeCollection, STORAGE_KEYS } from './storageKeys'
+import { generateId, readCollection, writeCollection, STORAGE_KEYS } from './storageKeys'
 import { TeamService } from './TeamService'
 
 export interface CreatePlayerInput {
@@ -65,7 +65,7 @@ export class PlayerService {
     const dtos = readAllDTOs()
     const now = new Date().toISOString()
     const dto: PlayerStorageDTO = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       name: input.name,
       nickname: input.nickname,
       wins: input.wins,

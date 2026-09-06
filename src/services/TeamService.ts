@@ -1,6 +1,6 @@
 import { Team } from '../models/Team'
 import type { PlayerStorageDTO, TeamStorageDTO } from '../types/storage.types'
-import { readCollection, writeCollection, STORAGE_KEYS } from './storageKeys'
+import { generateId, readCollection, writeCollection, STORAGE_KEYS } from './storageKeys'
 import { PlayerService } from './PlayerService'
 
 export interface CreateTeamInput {
@@ -56,7 +56,7 @@ export class TeamService {
     const dtos = readAllDTOs()
     const now = new Date().toISOString()
     const dto: TeamStorageDTO = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       name: input.name,
       followers: input.followers,
       country: input.country,

@@ -1,7 +1,7 @@
 import { Match } from '../models/Match'
 import type { Team } from '../models/Team'
 import type { MatchStorageDTO } from '../types/storage.types'
-import { readCollection, writeCollection, STORAGE_KEYS } from './storageKeys'
+import { generateId, readCollection, writeCollection, STORAGE_KEYS } from './storageKeys'
 import { TeamService } from './TeamService'
 
 export interface CreateMatchInput {
@@ -81,7 +81,7 @@ export class MatchService {
     const winner = resolveWinner(input.winnerId, team1, team2)
     // El constructor de Match vuelve a validar (equipos distintos, winner
     // participante) como garantía a nivel de dominio.
-    const match = new Match(crypto.randomUUID(), input.game, input.date, team1, team2, winner)
+    const match = new Match(generateId(), input.game, input.date, team1, team2, winner)
 
     writeCollection(STORAGE_KEYS.MATCHES, [...readAllDTOs(), toDTO(match)])
     return match
